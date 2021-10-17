@@ -12,6 +12,8 @@ namespace PlatformerMVC
     	[SerializeField] private LevelObjectView _playerView;
 
     	private SpriteAnimatorController _playerAnimator;
+        private CameraController _cameraController;
+        private PlayerController _playerController;
 
     	void Start()
     	{
@@ -19,13 +21,16 @@ namespace PlatformerMVC
         	if(_playerConfig)
         	{
         		_playerAnimator = new SpriteAnimatorController(_playerConfig);
-        		_playerAnimator.StartAnimation(_playerView._spriteRenderer, AnimState.Run, true, _animationSpeed);
+                _playerController = new PlayerController(_playerView, _playerAnimator);
         	}
+
+            _cameraController = new CameraController(_playerView.transform, Camera.main.transform);
     	}
 
     	void Update()
     	{
-        	_playerAnimator.Update();
+            _cameraController.Update();
+            _playerController.Update();
     	}
 	}
 }
